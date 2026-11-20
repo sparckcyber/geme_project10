@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b1018">
+<title>GEME PROJECT — 3D Studio</title>
+<style>
+:root{--bg:#0b1018;--panel:#121b28;--panel2:#172334;--line:#27384d;--text:#e8f0fb;--muted:#8da2bb;--blue:#438bff;--blue2:#70b1ff;--green:#37d996}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}button,input,select{font:inherit}button{cursor:pointer;color:var(--text);background:#1a293b;border:1px solid var(--line);border-radius:8px;padding:8px 11px}button:hover{border-color:var(--blue);background:#20354d}button.active{background:#1e4d88;border-color:#5599ff}.app{height:100dvh;display:flex;flex-direction:column}.top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--line);background:#0d1520;gap:10px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px}.brandmark{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,#2369db,#6cb5ff);font-size:18px}.top-actions,.toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.top-actions button{padding:7px 9px;font-size:12px}.main{flex:1;min-height:0;display:flex}.left{width:220px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--line);overflow:auto;padding:12px}.right{width:250px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:12px}.section-title{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:1.2px;margin:8px 0 12px}.tools{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tools button{font-size:12px;padding:10px 6px}.divider{height:1px;background:var(--line);margin:15px 0}.scene-list{display:flex;flex-direction:column;gap:4px}.scene-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:8px;background:transparent;border-color:transparent;font-size:12px}.scene-item.selected{background:#1b3552;border-color:#2f5e91}.scene-item span:first-child{color:var(--blue2)}.center{flex:1;min-width:0;display:flex;flex-direction:column;background:#0d131d}.toolbar{padding:8px;border-bottom:1px solid var(--line);background:#101925}.toolbar button{font-size:12px;padding:7px 9px}.viewport{position:relative;flex:1;min-height:0;overflow:hidden}.viewport canvas{display:block;width:100%;height:100%}.view-label{position:absolute;top:10px;left:10px;pointer-events:none;color:#9bb1c9;background:#111d2bd9;border:1px solid #293d54;border-radius:6px;padding:6px 8px;font-size:10px;letter-spacing:1px}.bottom{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.field{margin:9px 0}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.field input,.field select{width:100%;background:#0c1420;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:8px}.xyz{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.xyz input{min-width:0}.empty{color:var(--muted);font-size:12px;padding:8px}.hidden{display:none!important}.modal-backdrop{position:fixed;inset:0;background:#0009;display:grid;place-items:center;z-index:10;padding:16px}.modal{width:min(440px,100%);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}.modal h2{margin:0 0 12px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.play-banner{position:absolute;top:10px;right:10px;z-index:2;background:#145b3e;border:1px solid #2ad18b;border-radius:7px;padding:7px 12px;font-weight:700}.help{font-size:11px;color:var(--muted);line-height:1.6}.mobile-toggle{display:none}
+@media(max-width:850px){.left{width:165px;padding:8px}.right{width:190px;padding:8px}.top-actions button{font-size:10px;padding:6px}.tools button{font-size:10px}.toolbar{gap:4px}.toolbar button{padding:6px;font-size:10px}}
+@media(max-width:600px){.top{height:auto;min-height:48px;padding:6px}.brand{font-size:12px}.brandmark{width:26px;height:26px}.top-actions button{font-size:10px;padding:5px 6px}.main{position:relative}.left,.right{position:absolute;top:0;bottom:0;z-index:4;width:190px;box-shadow:0 8px 30px #0007;transition:transform .2s}.left{left:0;transform:translateX(-100%)}.right{right:0;transform:translateX(100%)}.left.open,.right.open{transform:translateX(0)}.center{width:100%}.mobile-toggle{display:inline-flex}.toolbar{overflow:auto;flex-wrap:nowrap}.toolbar button{white-space:nowrap}.bottom{font-size:9px}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div class="app">
+<header class="top">
+<div class="brand"><span class="brandmark">G</span><span>GEME PROJECT <small style="color:var(--muted);font-weight:400">3D STUDIO</small></span></div>
+<div class="top-actions">
+<button id="newScene">Novo</button><button id="saveScene">Salvar</button><button id="loadScene">Abrir</button><button id="importModel">Importar</button><button id="exportScene">Exportar GLB</button><button id="play">▶ Play</button>
+<button class="mobile-toggle" id="leftToggle">☰</button><button class="mobile-toggle" id="rightToggle">⚙</button>
+<input id="fileInput" type="file" accept=".glb,.gltf,.obj,.json" hidden>
+</div>
+</header>
+<main class="main">
+<aside class="left" id="leftPanel">
+<div class="section-title">CRIAR OBJETOS</div>
+<div class="tools">
+<button data-create="box">▣ Cubo</button><button data-create="sphere">● Esfera</button>
+<button data-create="cylinder">◉ Cilindro</button><button data-create="plane">▱ Plano</button>
+<button data-create="cone">▲ Cone</button><button data-create="torus">◎ Toro</button>
+</div>
+<div class="divider"></div><div class="section-title">HIERARQUIA</div>
+<div id="sceneList" class="scene-list"></div>
+<div class="divider"></div><div class="section-title">ATALHOS</div>
+<p class="help">Mouse: arrastar para orbitar · roda para zoom<br>W: mover · E: girar · R: escala<br>Delete: remover selecionado</p>
+</aside>
+<section class="center">
+<div class="toolbar">
+<button data-mode="translate" class="active">↔ Mover (W)</button><button data-mode="rotate">⟳ Girar (E)</button><button data-mode="scale">⤢ Escala (R)</button><button id="focusObject">Focar</button><button id="deleteObject">Excluir</button><button id="gridToggle" class="active">Grid</button>
+</div>
+<div class="viewport" id="viewport"><div class="view-label">VIEWPORT 3D · PERSPECTIVA</div></div>
+<div class="bottom"><span id="status">Pronto</span><span id="objectCount">Objetos: 0</span><span>GEME ENGINE</span></div>
+</section>
+<aside class="right" id="rightPanel">
+<div class="section-title">PROPRIEDADES</div>
+<div id="properties"><p class="empty">Selecione um objeto para editar.</p></div>
+</aside>
+</main>
+</div>
+<div id="modalRoot"></div>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {TransformControls} from 'three/addons/controls/TransformControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
+import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
+
+const $=s=>document.querySelector(s);
+const viewport=$('#viewport'), scene=new THREE.Scene();
+scene.background=new THREE.Color('#111923');
+scene.fog=new THREE.Fog('#111923',45,150);
+const camera=new THREE.PerspectiveCamera(60,1,.1,1000);camera.position.set(9,7,9);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setSize(viewport.clientWidth,viewport.clientHeight);viewport.appendChild(renderer.domElement);
+const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.target.set(0,0,0);
+const transform=new TransformControls(camera,renderer.domElement);scene.add(transform);transform.addEventListener('dragging-changed',e=>orbit.enabled=!e.value);transform.addEventListener('objectChange',()=>updateProperties());
+scene.add(new THREE.HemisphereLight(0xffffff,0x334155,2));
+const sun=new THREE.DirectionalLight(0xffffff,2.2);sun.position.set(7,12,5);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);scene.add(sun);
+const grid=new THREE.GridHelper(100,100,0x3d78b8,0x263647);scene.add(grid);
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(100,100),new THREE.MeshStandardMaterial({color:0x131c27,roughness:1}));ground.rotation.x=-Math.PI/2;ground.position.y=-.015;ground.receiveShadow=true;scene.add(ground);
+const axes=new THREE.AxesHelper(2);scene.add(axes);
+let objects=[],selected=null,mode='translate',playing=false,keys={},savedSceneName='Meu Projeto';
+function setStatus(t){$('#status').textContent=t}
+function makeMaterial(color='#5797f5'){return new THREE.MeshStandardMaterial({color,roughness:.55,metalness:.08})}
+function create(type){
+ let geometry;
+ if(type==='box')geometry=new THREE.BoxGeometry(1,1,1);
+ if(type==='sphere')geometry=new THREE.SphereGeometry(.5,32,20);
+ if(type==='cylinder')geometry=new THREE.CylinderGeometry(.5,.5,1,32);
+ if(type==='plane')geometry=new THREE.BoxGeometry(4,.05,4);
+ if(type==='cone')geometry=new THREE.ConeGeometry(.5,1,32);
+ if(type==='torus')geometry=new THREE.TorusGeometry(.5,.18,16,48);
+ const mesh=new THREE.Mesh(geometry,makeMaterial());mesh.name=type[0].toUpperCase()+type.slice(1)+'_'+(objects.length+1);mesh.position.y=type==='plane'?.025:.5;mesh.castShadow=true;mesh.receiveShadow=true;scene.add(mesh);objects.push(mesh);select(mesh);refreshList();setStatus(mesh.name+' criado');return mesh;
+}
+function select(obj){selected=obj;transform.detach();if(obj)transform.attach(obj);refreshList();updateProperties()}
+function refreshList(){const list=$('#sceneList');list.innerHTML='';objects.forEach((o,i)=>{const b=document.createElement('button');b.className='scene-item'+(o===selected?' selected':'');b.innerHTML=`<span>◈</span><span>${escapeHtml(o.name||'Objeto '+(i+1))}</span>`;b.onclick=()=>select(o);list.appendChild(b)});$('#objectCount').textContent='Objetos: '+objects.length}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function updateProperties(){const root=$('#properties');if(!selected){root.innerHTML='<p class="empty">Selecione um objeto para editar.</p>';return}const p=selected.position,r=selected.rotation,s=selected.scale;const color=selected.material?.color?.getHexString?.()||'5797f5';root.innerHTML=`<div class="field"><label>Nome</label><input id="propName" value="${escapeHtml(selected.name)}"></div><div class="field"><label>Posição (X, Y, Z)</label><div class="xyz"><input id="px" type="number" step=".1" value="${p.x.toFixed(2)}"><input id="py" type="number" step=".1" value="${p.y.toFixed(2)}"><input id="pz" type="number" step=".1" value="${p.z.toFixed(2)}"></div></div><div class="field"><label>Rotação (graus)</label><div class="xyz"><input id="rx" type="number" step="5" value="${THREE.MathUtils.radToDeg(r.x).toFixed(1)}"><input id="ry" type="number" step="5" value="${THREE.MathUtils.radToDeg(r.y).toFixed(1)}"><input id="rz" type="number" step="5" value="${THREE.MathUtils.radToDeg(r.z).toFixed(1)}"></div></div><div class="field"><label>Escala (X, Y, Z)</label><div class="xyz"><input id="sx" type="number" step=".1" value="${s.x.toFixed(2)}"><input id="sy" type="number" step=".1" value="${s.y.toFixed(2)}"><input id="sz" type="number" step=".1" value="${s.z.toFixed(2)}"></div></div><div class="field"><label>Material · cor</label><input id="color" type="color" value="#${color}"></div><div class="field"><label>Rugosidade</label><input id="rough" type="range" min="0" max="1" step=".05" value="${selected.material?.roughness??.5}"></div><div class="field"><label>Metallicidade</label><input id="metal" type="range" min="0" max="1" step=".05" value="${selected.material?.metalness??.1}"></div>`;
+ const bindNum=(id,fn)=>$('#'+id).addEventListener('input',()=>{fn(parseFloat($('#'+id).value)||0);refreshList()});
+ $('#propName').oninput=()=>{selected.name=$('#propName').value;refreshList()};
+ bindNum('px',v=>selected.position.x=v);bindNum('py',v=>selected.position.y=v);bindNum('pz',v=>selected.position.z=v);
+ bindNum('rx',v=>selected.rotation.x=THREE.MathUtils.degToRad(v));bindNum('ry',v=>selected.rotation.y=THREE.MathUtils.degToRad(v));bindNum('rz',v=>selected.rotation.z=THREE.MathUtils.degToRad(v));
+ bindNum('sx',v=>selected.scale.x=Math.max(.01,v));bindNum('sy',v=>selected.scale.y=Math.max(.01,v));bindNum('sz',v=>selected.scale.z=Math.max(.01,v));
+ $('#color').oninput=e=>selected.material.color.set(e.target.value);$('#rough').oninput=e=>selected.material.roughness=+e.target.value;$('#metal').oninput=e=>selected.material.metalness=+e.target.value;
+}
+function removeSelected(){if(!selected)return;scene.remove(selected);selected.geometry?.dispose();if(selected.material){if(Array.isArray(selected.material))selected.material.forEach(m=>m.dispose());else selected.material.dispose()}objects=objects.filter(o=>o!==selected);select(null);setStatus('Objeto removido')}
+function setMode(m){mode=m;transform.setMode(m);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m))}
+document.querySelectorAll('[data-create]').forEach(b=>b.onclick=()=>create(b.dataset.create));
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+$('#deleteObject').onclick=removeSelected;$('#gridToggle').onclick=()=>{grid.visible=!grid.visible;$('#gridToggle').classList.toggle('active',grid.visible)};
+$('#focusObject').onclick=()=>{if(!selected)return;orbit.target.copy(selected.position);camera.position.copy(selected.position).add(new THREE.Vector3(5,4,5));orbit.update()};
+$('#newScene').onclick=()=>{if(confirm('Criar cena nova? Os objetos atuais serão removidos.')){objects.slice().forEach(o=>scene.remove(o));objects=[];select(null);refreshList();setStatus('Nova cena')}}; 
+function serialize(){return {format:'GEME_PROJECT_SCENE',version:1,name:savedSceneName,objects:objects.map(o=>({name:o.name,type:o.geometry.type,position:o.position.toArray(),rotation:o.rotation.toArray(),scale:o.scale.toArray(),color:'#'+o.material.color.getHexString(),roughness:o.material.roughness,metalness:o.material.metalness}))}}
+$('#saveScene').onclick=()=>{const data=serialize();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});download(blob,(savedSceneName||'geme-scene')+'.geme.json');setStatus('Projeto salvo como arquivo JSON')};
+$('#loadScene').onclick=()=>{const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(data.format!=='GEME_PROJECT_SCENE')throw new Error('Arquivo de projeto inválido');objects.forEach(o=>scene.remove(o));objects=[];data.objects.forEach(d=>{let type=d.type.includes('Box')?'box':d.type.includes('Sphere')?'sphere':d.type.includes('Cylinder')?'cylinder':d.type.includes('Cone')?'cone':d.type.includes('Torus')?'torus':'box';const o=create(type);o.name=d.name;o.position.fromArray(d.position);o.rotation.set(d.rotation[0],d.rotation[1],d.rotation[2]);o.scale.fromArray(d.scale);o.material.color.set(d.color);o.material.roughness=d.roughness;o.material.metalness=d.metalness});select(null);setStatus('Projeto carregado')}catch(e){alert('Não foi possível abrir: '+e.message)}};inp.click()};
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+$('#exportScene').onclick=()=>{new GLTFExporter().parse(scene,result=>{const blob=result instanceof ArrayBuffer?new Blob([result],{type:'model/gltf-binary'}):new Blob([JSON.stringify(result)],{type:'model/gltf+json'});download(blob,'geme-scene.glb')},e=>alert('Erro exportando GLB: '+e),{binary:true})};
+$('#importModel').onclick=()=>$('#fileInput').click();
+$('#fileInput').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const url=URL.createObjectURL(file);let obj;if(file.name.toLowerCase().endsWith('.obj'))obj=new OBJLoader().parse(await file.text());else obj=(await new GLTFLoader().loadAsync(url)).scene;obj.name=file.name;obj.position.set(0,0,0);obj.traverse(n=>{if(n.isMesh){n.castShadow=true;n.receiveShadow=true}});scene.add(obj);objects.push(obj);select(obj);setStatus('Importado: '+file.name);URL.revokeObjectURL(url)}catch(err){alert('Falha ao importar modelo: '+err.message)}e.target.value=''};
+$('#play').onclick=()=>{playing=!playing;$('#play').classList.toggle('active',playing);$('#play').textContent=playing?'■ Parar':'▶ Play';setStatus(playing?'Modo Play ativo':'Modo edição');if(playing){transform.detach();orbit.enabled=false}else orbit.enabled=true};
+$('#leftToggle').onclick=()=>$('#leftPanel').classList.toggle('open');$('#rightToggle').onclick=()=>$('#rightPanel').classList.toggle('open');
+window.addEventListener('keydown',e=>{if(e.target.matches('input'))return;if(e.key==='Delete'||e.key==='Backspace')removeSelected();if(e.key.toLowerCase()==='w')setMode('translate');if(e.key.toLowerCase()==='e')setMode('rotate');if(e.key.toLowerCase()==='r')setMode('scale');keys[e.key.toLowerCase()]=true});
+window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+function resize(){const w=viewport.clientWidth,h=viewport.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}
+new ResizeObserver(resize).observe(viewport);
+function animate(){requestAnimationFrame(animate);orbit.update();renderer.render(scene,camera)}animate();
+create('box');setStatus('Editor 3D pronto · selecione ou crie objetos');
+</script>
+</body>
+</html>
