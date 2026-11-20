@@ -1,0 +1,273 @@
+
+/*
+==================================================
+ GEME PROJECT - EDITOR INTERFACE
+==================================================
+*/
+
+.geme-studio {
+    width: 100%;
+    min-height: 600px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    background: #0b111b;
+    color: #e5edf8;
+    border: 1px solid #253449;
+    border-radius: 14px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.studio-header {
+    height: 65px;
+    min-height: 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+    background: #111b29;
+    border-bottom: 1px solid #253449;
+    gap: 12px;
+}
+
+.studio-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.studio-logo {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.studio-brand strong {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.studio-brand small {
+    display: block;
+    color: #8da3bd;
+    margin-top: 4px;
+    font-size: 10px;
+}
+
+.studio-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.studio-actions button {
+    border: 1px solid #30445e;
+    background: #19283b;
+    color: #e5edf8;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.studio-actions button:hover {
+    background: #2563eb;
+    border-color: #60a5fa;
+}
+
+.studio-workspace {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+}
+
+.studio-sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #101925;
+    border-right: 1px solid #253449;
+    padding: 18px 12px;
+    overflow-y: auto;
+}
+
+.studio-sidebar h3 {
+    color: #8196b0;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin: 8px 8px 12px;
+}
+
+.tool-button {
+    width: 100%;
+    text-align: left;
+    padding: 12px;
+    margin-bottom: 5px;
+    color: #d5e1f0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.tool-button:hover {
+    background: #19283b;
+    border-color: #30445e;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: #253449;
+    margin: 18px 0;
+}
+
+.empty-list {
+    padding: 10px;
+    color: #6f8299;
+    font-size: 12px;
+}
+
+.object-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    padding: 10px;
+    margin-bottom: 4px;
+    background: #172436;
+    border: 1px solid #273a52;
+    border-radius: 7px;
+    color: #d5e1f0;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.object-item:hover {
+    border-color: #3b82f6;
+}
+
+.studio-viewport {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    background: #101722;
+    overflow: hidden;
+}
+
+.viewport-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 5;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: #172436dd;
+    color: #9eb5d0;
+    font-size: 10px;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+#geme-viewport {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+#geme-viewport canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.viewport-error {
+    display: grid;
+    place-content: center;
+    text-align: center;
+    height: 100%;
+    color: #94a3b8;
+    padding: 20px;
+}
+
+.viewport-error h3 {
+    color: #e2e8f0;
+    margin-bottom: 10px;
+}
+
+.studio-footer {
+    height: 32px;
+    min-height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    background: #111b29;
+    border-top: 1px solid #253449;
+    color: #7f94ac;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    .geme-studio {
+        height: 75vh;
+        min-height: 500px;
+    }
+
+    .studio-header {
+        height: auto;
+        min-height: 65px;
+        padding: 12px;
+        flex-wrap: wrap;
+    }
+
+    .studio-actions {
+        width: 100%;
+    }
+
+    .studio-actions button {
+        flex: 1;
+        padding: 9px 6px;
+    }
+
+    .studio-sidebar {
+        width: 115px;
+        min-width: 115px;
+        padding: 10px 6px;
+    }
+
+    .studio-sidebar h3 {
+        font-size: 9px;
+        margin: 8px 4px;
+    }
+
+    .tool-button {
+        font-size: 10px;
+        padding: 10px 5px;
+    }
+
+    .studio-brand strong {
+        font-size: 11px;
+    }
+
+    #geme-viewport {
+        min-height: 350px;
+    }
+
+    .studio-footer {
+        font-size: 8px;
+        padding: 0 6px;
+    }
+
+}
